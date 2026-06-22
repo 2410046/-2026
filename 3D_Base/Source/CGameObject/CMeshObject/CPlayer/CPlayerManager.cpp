@@ -48,7 +48,6 @@ void CPlayerManager::Draw(const CCamera* pCamera)
     {
         if (!player)
         {
-            OutputDebugStringA("nullptr player found in m_Players\n");
             continue;
         }
 
