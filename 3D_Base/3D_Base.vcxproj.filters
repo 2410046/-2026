@@ -193,6 +193,9 @@
     <Filter Include="Source\Reaction\CReactionApply">
       <UniqueIdentifier>{e5d47ec0-a783-47ba-8c6f-4dec96282301}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Reaction\CFiring">
+      <UniqueIdentifier>{f9a1cb24-d94b-4fb1-b254-53095f5a8e32}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\stdafx.cpp">
@@ -359,6 +362,9 @@
     </ClCompile>
     <ClCompile Include="Source\Reaction\CReactionApply\CReactionApply.cpp">
       <Filter>Source\Reaction\CReactionApply</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Reaction\CFiring\CFiring.cpp">
+      <Filter>Source\Reaction\CFiring</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -544,6 +550,9 @@
     </ClInclude>
     <ClInclude Include="Source\Reaction\CReactionApply\CReactionApply.h">
       <Filter>Source\Reaction\CReactionApply</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Reaction\CFiring\CFiring.h">
+      <Filter>Source\Reaction\CFiring</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

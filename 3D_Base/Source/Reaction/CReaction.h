@@ -9,7 +9,7 @@ public:
     enum MoveType
     {
         Boost,      //ブースト
-        Shot,       //ショット
+        Firing,       //射撃
         KnockBack,  //ノックバック
     };
 public:

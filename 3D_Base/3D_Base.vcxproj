@@ -199,6 +199,7 @@
     <ClCompile Include="Source\DirectX\CDirectX9.cpp" />
     <ClCompile Include="Source\Main\CMain.cpp" />
     <ClCompile Include="Source\Reaction\CBoost\CBoost.cpp" />
+    <ClCompile Include="Source\Reaction\CFiring\CFiring.cpp" />
     <ClCompile Include="Source\Reaction\CReaction.cpp" />
     <ClCompile Include="Source\Reaction\CReactionApply\CReactionApply.cpp" />
     <ClCompile Include="Source\Reaction\KnockBack\CKnockBack.cpp" />
@@ -264,6 +265,7 @@
     <ClInclude Include="Source\MathUtility.h" />
     <ClInclude Include="Source\MyMacro.h" />
     <ClInclude Include="Source\Reaction\CBoost\CBoost.h" />
+    <ClInclude Include="Source\Reaction\CFiring\CFiring.h" />
     <ClInclude Include="Source\Reaction\CReaction.h" />
     <ClInclude Include="Source\Reaction\CReactionApply\CReactionApply.h" />
     <ClInclude Include="Source\Reaction\KnockBack\CKnockBack.h" />
