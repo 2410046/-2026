@@ -4,7 +4,7 @@
 #include "Collision/CreateCollider/CreateCollider.h"
 #include "Collision/CollisionManager/CollisionManager.h"
 #include <algorithm>
-
+#include "Reaction/ReactionManager.h"
 namespace
 {
 	//カプセルのサイズ
@@ -80,7 +80,7 @@ void CPlayer::Update()
 		//プレイヤーの方向にまっすぐ進む
 		//ブースと状態
 		m_pBoost.Apply(m_vPosition, 0.5f, 10.f, m_vQuaternion);
-
+		m_ReactionManager.Apply(CReaction::Boost);
 		if (m_pBoost.TimeOut() == false)
 		{
 			m_MoveState = enMoveState::Live;
@@ -260,6 +260,10 @@ void CPlayer::OnCollision(CollisionBase* pCollider)
 			auto* other = dynamic_cast<CPlayer*>(pCollider->GetListener());
 			if (!other || other == this)
 				return;
+			auto* boost = CReactionManager::GetInstance()->GetReaction(CReaction::Boost);
+			auto knock =
+				std::dynamic_pointer_cast<CKnockBack>(
+					CReactionApply::CreateKnockBack());
 			//ノックバック
 			m_pKnockBack.Apply(
 				other->GetPosition(), GetPosition(), 0.5f, 20.0f);

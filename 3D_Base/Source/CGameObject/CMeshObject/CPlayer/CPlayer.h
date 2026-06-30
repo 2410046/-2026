@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "CMeshObject/CCharacter.h"
 #include "Global.h"
-#include "Reaction/ReactionManager.h"
+
 
 //#include "Reaction/KnockBack/CKnockBack.h"
 //#include "Reaction/CBoost/CBoost.h"

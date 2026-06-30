@@ -1,10 +1,10 @@
 #pragma once
 #include <vector>
 #include <memory>
-#include "CReaction.h"		//当たり判定クラス
+#include "CReaction.h"
 #include"Singleton.h"
 //======================================
-// 当たり判定管理クラス
+// リアクション管理クラス
 //======================================
 class CReactionManager
     :public Singleton<CReactionManager>
@@ -22,6 +22,12 @@ public:
     void Update(D3DXVECTOR3 pos);
 
     CReaction* GetReaction(CReaction::MoveType type);
+
+    template<class T>
+    T* GetReactions(CReaction::MoveType type)
+    {
+        return dynamic_cast<T*>(GetReaction(type));
+    }
 private:
     std::vector<std::shared_ptr<CReaction>> m_List;
 };

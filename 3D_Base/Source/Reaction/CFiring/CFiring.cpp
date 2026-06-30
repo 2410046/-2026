@@ -7,16 +7,18 @@ CFiring::CFiring(MoveType tag)
 }
 
 
-void CFiring::Apply(const D3DXVECTOR3& from, const D3DXVECTOR3& to, float power, float time)
+void CFiring::Apply(
+	const D3DXQUATERNION Quaternion)
 {
-
+	m_ShotBaseRot = Quaternion;//クオータニオンを取得
+	m_vQuaternion;
 }
 
 void CFiring::Update()
 {
-	m_StateTime += 0.1f;
+	m_State.timer += 0.1f;
 
-	float t = m_StateTime / 10.0f;
+	float t = m_State.timer / 10.0f;
 
 	float pitch = D3DX_PI / 4.0f * sinf(t * D3DX_PI);
 
@@ -31,7 +33,8 @@ void CFiring::Update()
 	m_vQuaternion = tilt * m_ShotBaseRot;
 	if (t >= 1.0f)
 	{
-		m_StateTime = 0.f;
-		m_MoveState = enMoveState::Live;
+		m_State.timer = 0.f;
+		//return true;
+		//m_MoveState = enMoveState::Live;
 	}
 }
