@@ -5,15 +5,14 @@ class CKnockBack
     :public CReaction
 {
 public:
-    CKnockBack(MoveType tag);
+    CKnockBack();
     ~CKnockBack()override;
     //出現
-    void Apply(
-        const D3DXVECTOR3& from, const D3DXVECTOR3& to,
-        float power, float time);
+    void Apply(const ReactionParam& p)override;
     //更新関数
     void Update()override;
     //モーションを設定
-    virtual MoveType GetType() const override { MoveType::Boost; };
+    virtual MoveType GetType() const override { return MoveType::Boost; };
+protected:
 };
 

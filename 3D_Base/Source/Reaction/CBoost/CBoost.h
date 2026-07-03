@@ -5,17 +5,18 @@ class CBoost
     :public CReaction
 {
 public:
-    CBoost(MoveType tag);
+    CBoost();
     ~CBoost();
     //出現
-   virtual void Apply(
-        const D3DXVECTOR3& direction,
-        float power, float time,
-        const D3DXQUATERNION& rotation);
+   void Apply(const ReactionParam& p)override;
+   //virtual void Apply(
+   //     const D3DXVECTOR3& direction,
+   //     float power, float time,
+   //     const D3DXQUATERNION& rotation);
    //更新関数
    void Update()override;
    //モーションを設定
-   virtual MoveType GetType() const override { MoveType::Boost; };
+   virtual MoveType GetType() const override { return MoveType::Boost; };
 protected:
-    void Apply() override final;
+   // void Apply() override final;
 };

@@ -5,19 +5,16 @@ class CFiring
     :public CReaction
 {
 public:
-    CFiring(MoveType tag);
+    CFiring();
     ~CFiring()override;
     //出現
-    void Apply(const D3DXQUATERNION Quaternion);
+    void Apply(const ReactionParam& p)override;
     //更新関数
     void Update()override;
     //モーションを設定
-    virtual MoveType GetType() const override { MoveType::Firing; };
+    virtual MoveType GetType() const override { return MoveType::Firing; };
 private:
     D3DXQUATERNION m_ShotBaseRot;
     D3DXQUATERNION m_vQuaternion;
-
-protected:
-    void Apply() override final;
 };
 

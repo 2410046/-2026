@@ -27,6 +27,10 @@ public:
     static std::shared_ptr<CReaction> CreateFiring(
         CReaction::MoveType tag,
         const D3DXQUATERNION& rot);
+
+
+    static std::shared_ptr<CReaction> Create(
+        CReaction::MoveType tag);
 };
 
 ////スフィアの当たり判定を生成

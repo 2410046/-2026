@@ -79,12 +79,20 @@ void CPlayer::Update()
 	{
 		//プレイヤーの方向にまっすぐ進む
 		//ブースと状態
-		m_pBoost.Apply(m_vPosition, 0.5f, 10.f, m_vQuaternion);
-		m_ReactionManager.Apply(CReaction::Boost);
-		if (m_pBoost.TimeOut() == false)
-		{
-			m_MoveState = enMoveState::Live;
-		}
+		//m_pBoost.Apply(m_vPosition, 0.5f, 10.f, m_vQuaternion);
+
+		//ReactionParam param;
+		//param.pos = m_vPosition;
+		//param.rot = m_vQuaternion;
+		//param.speed = 0.5f;
+		//param.time = 10.f;
+
+		m_pReaction = CReactionApply::Create(CReaction::Boost);
+		m_pReaction->Apply(m_vPosition, 0.5f, 10.f, m_vQuaternion);
+		//if (m_pBoost.TimeOut() == false)
+		//{
+		//	m_MoveState = enMoveState::Live;
+		//}
 	}
 		break;
 	case enMoveState::ShotIN://
@@ -119,8 +127,14 @@ void CPlayer::Update()
 		break;
 	}
 	//ノックバック中
-	m_pKnockBack.Update();
-	m_pBoost.Update();
+	//m_pKnockBack.Update();
+	//m_pBoost.Update();
+	m_pReaction->Update();
+
+	if (m_pReaction->TimeOut() == false)
+	{
+		m_MoveState = enMoveState::Live;
+	}
 }
 //描画関数
 void CPlayer::Draw(
@@ -228,7 +242,6 @@ void CPlayer::Quotanion(D3DXVECTOR3 moveDir)
 {
 	D3DXVec3Normalize(&moveDir, &moveDir);
 
-
 	// ===== 回転（クォータニオン）=====
 	float yaw = atan2f(moveDir.x, moveDir.z) - D3DX_PI / 2;
 
@@ -260,10 +273,6 @@ void CPlayer::OnCollision(CollisionBase* pCollider)
 			auto* other = dynamic_cast<CPlayer*>(pCollider->GetListener());
 			if (!other || other == this)
 				return;
-			auto* boost = CReactionManager::GetInstance()->GetReaction(CReaction::Boost);
-			auto knock =
-				std::dynamic_pointer_cast<CKnockBack>(
-					CReactionApply::CreateKnockBack());
 			//ノックバック
 			m_pKnockBack.Apply(
 				other->GetPosition(), GetPosition(), 0.5f, 20.0f);

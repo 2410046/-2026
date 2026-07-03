@@ -82,4 +82,6 @@ protected:
 	float       m_Scale;
 	int         m_Life;			//ライフの数
 	D3DXQUATERNION m_ShotBaseRot;
+
+	std::shared_ptr<CReaction>	m_pReaction;	//当たり判定
 };

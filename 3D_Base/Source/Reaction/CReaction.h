@@ -2,6 +2,7 @@
 /********************************************************************************
 * リアクションクラス
 **/
+#include "CReactionApply/CReactionApply.h"
 class CReaction
 {
 public:
@@ -12,11 +13,30 @@ public:
         Firing,     //射撃
         KnockBack,  //ノックバック
     };
+protected:
+    //リアクションステータス
+    struct ReactionState
+    {
+        bool active = false;          // アクション中か
+        D3DXVECTOR3 velocity;         // 速度
+        float timer = 0.0f;           // 継続時間
+    };
+
+    struct ReactionParam
+    {
+        D3DXVECTOR3 from;
+        D3DXVECTOR3 to;
+
+        D3DXQUATERNION rot;
+
+        float power;
+        float time;
+    };
 public:
-    CReaction(MoveType type);
+    CReaction();
     virtual ~CReaction() {}
      //初期化
-     virtual void Apply() = 0;
+    virtual void Apply(const ReactionParam& param) = 0;
      //更新関数
 	 virtual void Update() = 0;
      //座標を取得
@@ -34,14 +54,15 @@ public:
      {
          return m_State.timer <= 0.f;
      };
-protected:
-    //リアクションステータス
-    struct ReactionState
-    {
-        bool active = false;          // アクション中か
-        D3DXVECTOR3 velocity;         // 速度
-        float timer = 0.0f;           // 継続時間
-    };
+
+     void SetReaction(
+         CReaction::MoveType type,
+         const ReactionParam& param)
+     {
+         auto reaction = CReactionApply::Create(type);
+
+         reaction->Apply(param);
+     }
 protected:
     ReactionState m_State = {};
     D3DXVECTOR3 m_vPosition = {};

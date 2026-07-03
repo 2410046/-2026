@@ -1,8 +1,8 @@
 #include "CFiring.h"
 
 
-CFiring::CFiring(MoveType tag)
-    :CReaction(tag)
+CFiring::CFiring()
+    :CReaction()
 {
 }
 

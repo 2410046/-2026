@@ -1,7 +1,7 @@
 #include "CKnockBack.h"
 
-CKnockBack::CKnockBack(MoveType tag)
-    :CReaction(tag)
+CKnockBack::CKnockBack()
+    :CReaction()
 {
 }
 

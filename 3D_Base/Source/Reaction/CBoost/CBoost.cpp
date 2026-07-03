@@ -1,8 +1,8 @@
 #include "CBoost.h"
 
 
-CBoost::CBoost(MoveType tag)
-    :CReaction(tag)
+CBoost::CBoost()
+    :CReaction()
 {
 }
 

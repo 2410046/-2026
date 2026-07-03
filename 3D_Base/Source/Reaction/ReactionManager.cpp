@@ -18,7 +18,7 @@ void CReactionManager::Apply(CReaction::MoveType type)
 {
     for (auto& reaction : m_List)
     {
-        if (reaction->GetType() == type)
+        if (auto* reaction = GetReaction(type))
         {
             reaction->Apply();
             return;
