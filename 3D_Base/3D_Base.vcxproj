@@ -201,7 +201,7 @@
     <ClCompile Include="Source\Reaction\CBoost\CBoost.cpp" />
     <ClCompile Include="Source\Reaction\CFiring\CFiring.cpp" />
     <ClCompile Include="Source\Reaction\CReaction.cpp" />
-    <ClCompile Include="Source\Reaction\CReactionApply\CReactionApply.cpp" />
+    <ClCompile Include="Source\Reaction\CReactionApply\CReactionFactory.cpp" />
     <ClCompile Include="Source\Reaction\KnockBack\CKnockBack.cpp" />
     <ClCompile Include="Source\Reaction\ReactionManager.cpp" />
     <ClCompile Include="Source\Scene\CGame\CGame.cpp" />
@@ -267,7 +267,7 @@
     <ClInclude Include="Source\Reaction\CBoost\CBoost.h" />
     <ClInclude Include="Source\Reaction\CFiring\CFiring.h" />
     <ClInclude Include="Source\Reaction\CReaction.h" />
-    <ClInclude Include="Source\Reaction\CReactionApply\CReactionApply.h" />
+    <ClInclude Include="Source\Reaction\CReactionApply\CReactionFactory.h" />
     <ClInclude Include="Source\Reaction\KnockBack\CKnockBack.h" />
     <ClInclude Include="Source\Reaction\ReactionManager.h" />
     <ClInclude Include="Source\Scene\CGameData.h" />

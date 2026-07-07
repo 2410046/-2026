@@ -7,11 +7,10 @@ CFiring::CFiring()
 }
 
 
-void CFiring::Apply(
-	const D3DXQUATERNION Quaternion)
+void CFiring::Apply(const ReactionParam& param)
 {
-	m_ShotBaseRot = Quaternion;//クオータニオンを取得
-	m_vQuaternion;
+	m_ShotBaseRot = param.rot;//クオータニオンを取得
+	//m_vQuaternion;
 }
 
 void CFiring::Update()

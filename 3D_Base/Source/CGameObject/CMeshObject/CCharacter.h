@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include "CGameObject/CMeshObject/CStaticMeshObject.h"
-//#include "Reaction/CReaction.h"
+#include "Reaction/CReaction.h"
 /**************************************************
 *   キャラクタークラス
 **/

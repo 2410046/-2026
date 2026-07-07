@@ -6,17 +6,14 @@ CBoost::CBoost()
 {
 }
 
-void CBoost::Apply(
-    const D3DXVECTOR3& direction,
-    float power, float time, 
-    const D3DXQUATERNION& rotation)
+void CBoost::Apply(const ReactionParam& param)
 {
         // 前方向(X+)
         D3DXVECTOR3 forward(1.0f, 0.0f, 0.f);
 
         // 回転行列へ変換
         D3DXMATRIX matRot;
-        D3DXMatrixRotationQuaternion(&matRot, &rotation);
+        D3DXMatrixRotationQuaternion(&matRot, &param.rot);
 
         // forward を回転
         D3DXVECTOR3 dir;
@@ -25,8 +22,8 @@ void CBoost::Apply(
         D3DXVec3Normalize(&dir, &dir);
 
         m_State.active = true;
-        m_State.velocity = dir * power;
-        m_State.timer = time;
+        m_State.velocity = dir * param.power;
+        m_State.timer = param.time;
 }
 
 void CBoost::Update()

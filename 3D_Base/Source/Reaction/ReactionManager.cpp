@@ -20,7 +20,7 @@ void CReactionManager::Apply(CReaction::MoveType type)
     {
         if (auto* reaction = GetReaction(type))
         {
-            reaction->Apply();
+            //reaction->Apply(aa);
             return;
         }
     }

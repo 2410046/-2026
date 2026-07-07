@@ -8,7 +8,7 @@ public:
     CFiring();
     ~CFiring()override;
     //出現
-    void Apply(const ReactionParam& p)override;
+    void Apply(const ReactionParam& param)override;
     //更新関数
     void Update()override;
     //モーションを設定

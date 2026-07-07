@@ -4,11 +4,10 @@ CKnockBack::CKnockBack()
     :CReaction()
 {
 }
-
 void CKnockBack::Apply(
-    const D3DXVECTOR3& from, const D3DXVECTOR3& to, float power, float time)
+     const ReactionParam& param)
 {
-    D3DXVECTOR3 dir = to - from;
+    D3DXVECTOR3 dir = param.to - param.from;
 
     float len = D3DXVec3Length(&dir);
     if (len <= 0.0001f)
@@ -17,8 +16,8 @@ void CKnockBack::Apply(
     dir /= len;
 
     m_State.active = true;
-    m_State.velocity = dir * power;
-    m_State.timer = time;
+    m_State.velocity = dir * param.power;
+    m_State.timer = param.time;
 }
 
 void CKnockBack::Update()

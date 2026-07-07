@@ -4,7 +4,7 @@
 #include "Collision/CreateCollider/CreateCollider.h"
 #include "Collision/CollisionManager/CollisionManager.h"
 #include <algorithm>
-#include "Reaction/ReactionManager.h"
+#include "Reaction/CReactionApply/CReactionFactory.h"
 namespace
 {
 	//カプセルのサイズ
@@ -87,8 +87,7 @@ void CPlayer::Update()
 		//param.speed = 0.5f;
 		//param.time = 10.f;
 
-		m_pReaction = CReactionApply::Create(CReaction::Boost);
-		m_pReaction->Apply(m_vPosition, 0.5f, 10.f, m_vQuaternion);
+	
 		//if (m_pBoost.TimeOut() == false)
 		//{
 		//	m_MoveState = enMoveState::Live;
@@ -129,11 +128,15 @@ void CPlayer::Update()
 	//ノックバック中
 	//m_pKnockBack.Update();
 	//m_pBoost.Update();
-	m_pReaction->Update();
-
-	if (m_pReaction->TimeOut() == false)
+	if (m_pReaction)
 	{
-		m_MoveState = enMoveState::Live;
+		m_pReaction->Update();
+
+		if (m_pReaction->TimeOut())
+		{
+			m_pReaction.reset();
+			m_MoveState = enMoveState::Live;
+		}
 	}
 }
 //描画関数
@@ -273,15 +276,25 @@ void CPlayer::OnCollision(CollisionBase* pCollider)
 			auto* other = dynamic_cast<CPlayer*>(pCollider->GetListener());
 			if (!other || other == this)
 				return;
+
 			//ノックバック
-			m_pKnockBack.Apply(
-				other->GetPosition(), GetPosition(), 0.5f, 20.0f);
+			CReaction::ReactionParam param;
+			param.from = other->GetPosition();
+			param.to = GetPosition();
+			param.power = 0.5f;
+			param.time = 20.0f;
+
+			m_pReaction = CReactionFactory::Create(CReaction::KnockBack);
+			m_pReaction->Apply(param);
+
 			//相手のプレイヤーも
-			other->m_pKnockBack.Apply(
-				GetPosition(), other->GetPosition(), 0.5f, 20.0f);
+			//other->m_pKnockBack.Apply(
+			//	GetPosition(), other->GetPosition(), 0.5f, 20.0f);
 	    }
 		break;
 	default:
 		break;
 	}
 }
+//m_pReaction = CReactionApply::Create(CReaction::Boost);
+//m_pReaction->Apply(m_vPosition, 0.5f, 10.f, m_vQuaternion);

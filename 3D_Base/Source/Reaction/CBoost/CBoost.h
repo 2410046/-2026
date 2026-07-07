@@ -8,7 +8,7 @@ public:
     CBoost();
     ~CBoost();
     //出現
-   void Apply(const ReactionParam& p)override;
+   void Apply(const ReactionParam& param)override;
    //virtual void Apply(
    //     const D3DXVECTOR3& direction,
    //     float power, float time,

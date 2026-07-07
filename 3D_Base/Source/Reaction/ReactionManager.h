@@ -23,11 +23,20 @@ public:
 
     CReaction* GetReaction(CReaction::MoveType type);
 
-    template<class T>
-    T* GetReactions(CReaction::MoveType type)
+    template<class T, class... Args>
+    std::unique_ptr<CReaction> SetReaction(Args&&... args)
     {
-        return dynamic_cast<T*>(GetReaction(type));
+        auto reaction = std::make_unique<T>();
+
+        reaction->Apply(std::forward<Args>(args)...);
+
+        return reaction;
     }
+    //template<class T>
+    //T* GetReactions(CReaction::MoveType type)
+    //{
+    //    return dynamic_cast<T*>(GetReaction(type));
+    //}
 private:
     std::vector<std::shared_ptr<CReaction>> m_List;
 };
