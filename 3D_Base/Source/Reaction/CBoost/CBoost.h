@@ -6,7 +6,7 @@ class CBoost
 {
 public:
     CBoost();
-    ~CBoost();
+    ~CBoost() override{};
     //出現
    void Apply(const ReactionParam& param)override;
    //virtual void Apply(

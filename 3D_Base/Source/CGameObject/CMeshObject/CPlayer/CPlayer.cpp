@@ -38,7 +38,6 @@ CPlayer::~CPlayer()
 //動作関数
 void CPlayer::Update()
 {
-
 	switch (m_MoveState)
 	{
 
@@ -77,6 +76,18 @@ void CPlayer::Update()
 		break;
 	case enMoveState::Boost:
 	{
+		// m_pBoost.Apply(m_vPosition, 0.5f, 10.f, m_vQuaternion);
+		//プレイヤーの方向にまっすぐ進む
+		//ブースと状態
+		CReaction::ReactionParam param;
+		param.rot = m_vQuaternion;
+		param.power = 0.5f;
+		param.time = 5.f;
+
+		m_pReaction = CReactionFactory::Create(CReaction::Boost);
+		m_pReaction->Apply(param);
+
+
 		//プレイヤーの方向にまっすぐ進む
 		//ブースと状態
 		//m_pBoost.Apply(m_vPosition, 0.5f, 10.f, m_vQuaternion);
@@ -95,11 +106,23 @@ void CPlayer::Update()
 	}
 		break;
 	case enMoveState::ShotIN://
-		m_ShotBaseRot = m_vQuaternion;//クオータニオンを取得
-		m_MoveState = enMoveState::Shot;//ショット状態に遷移
+		//ここはまだできてない
+	{
+		CReaction::ReactionParam param;
+		param.rot = m_vQuaternion;
+
+		m_pReaction = CReactionFactory::Create(CReaction::Firing);
+		m_pReaction->Apply(param);
+				//m_ShotBaseRot = m_vQuaternion;//クオータニオンを取得
+		//m_MoveState = enMoveState::Shot;//ショット状態に遷移
+	}
+
+		//m_ShotBaseRot = m_vQuaternion;//クオータニオンを取得
+		//m_MoveState = enMoveState::Shot;//ショット状態に遷移
 		break;
 	case enMoveState::Shot:
 	{
+
 		m_StateTime += 0.1f;
 
 		float t = m_StateTime / 10.0f;
@@ -126,12 +149,11 @@ void CPlayer::Update()
 		break;
 	}
 	//ノックバック中
-	//m_pKnockBack.Update();
-	//m_pBoost.Update();
+
 	if (m_pReaction)
 	{
+		m_pReaction->SetPosition(&m_vPosition);
 		m_pReaction->Update();
-
 		if (m_pReaction->TimeOut())
 		{
 			m_pReaction.reset();
@@ -143,11 +165,11 @@ void CPlayer::Update()
 void CPlayer::Draw(
 	const CCamera* pCamera)
 {
-	OutputDebugStringA("Player Draw\n");
 	CCharacter::Draw(pCamera);
 }
 
 //コントローラー操作
+//プレイヤーの速度
 void CPlayer::Controller()
 {
 #if 1
@@ -290,11 +312,30 @@ void CPlayer::OnCollision(CollisionBase* pCollider)
 			//相手のプレイヤーも
 			//other->m_pKnockBack.Apply(
 			//	GetPosition(), other->GetPosition(), 0.5f, 20.0f);
+
+			//m_pReaction = CReactionApply::Create(CReaction::Boost);
+			//m_pReaction->Apply(m_vPosition, 0.5f, 10.f, m_vQuaternion);
+			
+			//auto* other = dynamic_cast<CPlayer*>(pCollider->GetListener());
+			//if (!other || other == this)
+			//return;
+			//
+			////ノックバック
+			//CReaction::ReactionParam param;
+			//param.from = other->GetPosition();
+			//param.to = GetPosition();
+			//param.power = 0.5f;
+			//param.time = 20.0f;
+			//
+			//m_pReaction = CReactionFactory::Create(CReaction::KnockBack);
+			//m_pReaction->Apply(param);
+			//
+			////相手のプレイヤーも
+			////other->m_pKnockBack.Apply(
+			////	GetPosition(), other->GetPosition(), 0.5f, 20.0f);
 	    }
 		break;
 	default:
 		break;
 	}
 }
-//m_pReaction = CReactionApply::Create(CReaction::Boost);
-//m_pReaction->Apply(m_vPosition, 0.5f, 10.f, m_vQuaternion);

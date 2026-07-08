@@ -33,13 +33,19 @@ protected:
     };
 public:
     CReaction();
-    virtual ~CReaction() {}
+    virtual ~CReaction() = default;
      //初期化
     virtual void Apply(const ReactionParam& param) = 0;
      //更新関数
 	 virtual void Update() = 0;
      //座標を取得
-     void SetPosition(D3DXVECTOR3 pos) { m_vPosition = pos; }
+    void SetPosition(D3DXVECTOR3* pos)
+    {
+        m_pPosition = pos;
+    }
+
+    // void SetPosition(D3DXVECTOR3 pos) { m_vPosition = pos; }
+
      //モーションを設定
      virtual MoveType GetType() const = 0;
 
@@ -54,15 +60,8 @@ public:
          return m_State.timer <= 0.f;
      };
 
-     //void SetReaction(
-     //    CReaction::MoveType type,
-     //    const ReactionParam& param)
-     //{
-     //    auto reaction = CReactionApply::Create(type);
-
-     //    reaction->Apply(param);
-     //}
 protected:
     ReactionState m_State = {};
-    D3DXVECTOR3 m_vPosition = {};
+    D3DXVECTOR3* m_pPosition = nullptr;//これを戻すとエラーが
+   // D3DXVECTOR3 m_vPosition = {};
 };

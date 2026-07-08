@@ -19,24 +19,9 @@ public:
     // 出現
     void Apply(CReaction::MoveType type);
     // 更新関数
-    void Update(D3DXVECTOR3 pos);
+    void Update(/*D3DXVECTOR3 pos*/);
 
     CReaction* GetReaction(CReaction::MoveType type);
-
-    template<class T, class... Args>
-    std::unique_ptr<CReaction> SetReaction(Args&&... args)
-    {
-        auto reaction = std::make_unique<T>();
-
-        reaction->Apply(std::forward<Args>(args)...);
-
-        return reaction;
-    }
-    //template<class T>
-    //T* GetReactions(CReaction::MoveType type)
-    //{
-    //    return dynamic_cast<T*>(GetReaction(type));
-    //}
 private:
     std::vector<std::shared_ptr<CReaction>> m_List;
 };

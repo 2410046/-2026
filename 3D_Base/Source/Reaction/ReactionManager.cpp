@@ -26,7 +26,7 @@ void CReactionManager::Apply(CReaction::MoveType type)
     }
 }
 // 更新関数
-void CReactionManager::Update(D3DXVECTOR3 pos)
+void CReactionManager::Update(/*D3DXVECTOR3 pos*/)
 {
     //----------------------------------
     // リアクション更新
@@ -34,7 +34,6 @@ void CReactionManager::Update(D3DXVECTOR3 pos)
     for (const auto& pReaction : m_List)
     {
         //座標を設定
-        pReaction->SetPosition(pos);
         pReaction->Update();
     }
 }

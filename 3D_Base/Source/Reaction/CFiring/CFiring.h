@@ -6,7 +6,7 @@ class CFiring
 {
 public:
     CFiring();
-    ~CFiring()override;
+    ~CFiring()override {};
     //出現
     void Apply(const ReactionParam& param)override;
     //更新関数

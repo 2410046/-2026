@@ -2,6 +2,7 @@
 #include "CGameObject/CSpriteObject/CTIme/CTime.h"		//タイムクラス
 #include "Scene/SelectText/CSelectText.h"  //選択肢の関数
 #include "Collision/CollisionManager/CollisionManager.h"
+#include "Reaction/ReactionManager.h"
 // 定数定義
 namespace 
 {
@@ -109,6 +110,7 @@ void CGame::Release()
 {
 		//初期化
 	CollisionManager::GetInstance()->Init();
+	CReactionManager::GetInstance()->Init();
 }
 //動作関数
 void CGame::Update()
@@ -117,9 +119,8 @@ void CGame::Update()
 	//ステージの移動制限
 
 	m_pPlayer->Update();
-
+	CReactionManager::GetInstance()->Update();
 //	m_pScores->Update();
-
 	CollisionManager::GetInstance()->Update();
 
 	//ボタンの動作関数

@@ -6,7 +6,7 @@ class CKnockBack
 {
 public:
     CKnockBack();
-    ~CKnockBack()override;
+    ~CKnockBack()override{};
     //出現
     void Apply(const ReactionParam& param)override;
     //更新関数

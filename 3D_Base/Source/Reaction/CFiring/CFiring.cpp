@@ -6,7 +6,6 @@ CFiring::CFiring()
 {
 }
 
-
 void CFiring::Apply(const ReactionParam& param)
 {
 	m_ShotBaseRot = param.rot;//クオータニオンを取得

@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "CScene.h"				//シーンクラス
 #include "CGameObject/CMeshObject/CPlayer/CPlayerManager.h"	    //プレイヤークラス
-//#include "CGameObject/CUIObject/Score/CScoreManager.h"		    //スコアマネージャークラス
+//#include "CGameObject/CUIObject/Score/CScoreManager.h"		//スコアマネージャークラス
 
 /********************************************************************************
 *	ゲームクラス.

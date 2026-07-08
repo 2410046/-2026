@@ -33,7 +33,7 @@ void CBoost::Update()
         return;
     }
 
-    m_vPosition += m_State.velocity;
+    *m_pPosition += m_State.velocity;
 
     // 減衰（吹っ飛び感）
     m_State.velocity *= 0.9f;
