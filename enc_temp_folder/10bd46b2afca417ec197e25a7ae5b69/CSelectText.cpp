@@ -1,6 +1,6 @@
 ﻿#include "CSelectText.h"
 #if 1
-// 押した瞬間だけ
+// 押した瞬間だけ true
 bool KeyTrigger(int vk)
 {
 	static std::unordered_map<int, bool> prev = {};
