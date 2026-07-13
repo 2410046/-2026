@@ -15,13 +15,13 @@ public:
     };
     struct ReactionParam
     {
-        D3DXVECTOR3 from;
-        D3DXVECTOR3 to;
+        D3DXVECTOR3 from = {};
+        D3DXVECTOR3 to = {};
 
-        D3DXQUATERNION rot;
+        D3DXQUATERNION rot = {};
 
-        float power;
-        float time;
+        float power = 0.f;
+        float time = 0.f;
     };
 protected:
     //リアクションステータス
@@ -43,9 +43,6 @@ public:
     {
         m_pPosition = pos;
     }
-
-    // void SetPosition(D3DXVECTOR3 pos) { m_vPosition = pos; }
-
      //モーションを設定
      virtual MoveType GetType() const = 0;
 

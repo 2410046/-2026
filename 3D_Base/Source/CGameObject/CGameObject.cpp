@@ -17,8 +17,6 @@ CGameObject::~CGameObject()
 
 const D3DXMATRIX& CGameObject::GetWorldMatrix() const
 {
-	//if (m_IsWorldMatrixDirty)	//一旦なし突貫
-	{
 		//ワールド行列、スケール行列、回転行列、平行移動行列.
 		D3DXMATRIX mWorld, mScale, mRotQuat, mTran;
 
@@ -36,8 +34,6 @@ const D3DXMATRIX& CGameObject::GetWorldMatrix() const
 		//ワールド行列作成.
 		//拡縮×回転×移動 ※順番がとても大切！！.
 		m_WorldTrans= mScale * mRotQuat * mTran;
-	}
+
 	return m_WorldTrans;
 }
-
-//カプコンフロムセガ
