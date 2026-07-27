@@ -22,8 +22,8 @@ void CBoost::Apply(const ReactionParam& param)
         D3DXVec3Normalize(&dir, &dir);
 
         m_State.active = true;
-        m_State.velocity = dir * param.power;
-        m_State.timer = param.time;
+        m_State.velocity = dir * 0.5f;
+        m_State.timer = 10.f;
 }
 
 void CBoost::Update()

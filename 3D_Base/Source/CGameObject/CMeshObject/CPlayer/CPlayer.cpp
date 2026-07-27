@@ -18,7 +18,7 @@ namespace
 //コンストラクタ
 CPlayer::CPlayer()
 	: m_MoveState		( enMoveState::App )
-	, m_StateTime		( 0.f )
+	, m_StateTime		( 5.f )
 	, m_ID				( 0 )
 	, m_Life			( 3 )
 	, m_Scale			( 0 )
@@ -74,47 +74,33 @@ void CPlayer::Update()
 			m_angle = 0.f;
 		}
 		break;
-	case enMoveState::Boost:
+	case enMoveState::Boost:		//ブースト状態
 	{
-		// m_pBoost.Apply(m_vPosition, 0.5f, 10.f, m_vQuaternion);
 		//プレイヤーの方向にまっすぐ進む
-		//ブースと状態
 		CReaction::ReactionParam param;
 		param.rot = m_vQuaternion;
-		param.power = 0.5f;
-		param.time = 5.f;
-
 		m_pReaction = CReactionFactory::Create(CReaction::Boost);
 		m_pReaction->Apply(param);
-
-
-		//プレイヤーの方向にまっすぐ進む
-		//ブースと状態
-		//m_pBoost.Apply(m_vPosition, 0.5f, 10.f, m_vQuaternion);
-
-		//ReactionParam param;
-		//param.pos = m_vPosition;
-		//param.rot = m_vQuaternion;
-		//param.speed = 0.5f;
-		//param.time = 10.f;
-
 	
-		//if (m_pBoost.TimeOut() == false)
-		//{
-		//	m_MoveState = enMoveState::Live;
-		//}
+		if (m_pReaction->TimeOut() == false)
+		{
+			m_MoveState = enMoveState::Live;
+		}
 	}
 		break;
 	case enMoveState::ShotIN://
 		//ここはまだできてない
 	{
+		//m_ShotBaseRot = m_vQuaternion;//クオータニオンを取得
 		CReaction::ReactionParam param;
 		param.rot = m_vQuaternion;
-
 		m_pReaction = CReactionFactory::Create(CReaction::Firing);
 		m_pReaction->Apply(param);
-				//m_ShotBaseRot = m_vQuaternion;//クオータニオンを取得
-		//m_MoveState = enMoveState::Shot;//ショット状態に遷移
+		//クオータニオンをプレイヤーと同期しなければならない
+		if (m_pReaction->TimeOut() == false)
+		{
+			m_MoveState = enMoveState::Live;
+		}
 	}
 
 		//m_ShotBaseRot = m_vQuaternion;//クオータニオンを取得
@@ -122,27 +108,44 @@ void CPlayer::Update()
 		break;
 	case enMoveState::Shot:
 	{
+		// 状態経過時間を減少させる
+		//m_StateTime -= 0.1f;
 
-		m_StateTime += 0.1f;
+		//// 傾き計算用の時間係数を算出
+		//// 0～1の範囲で変化する値として使用する
+		//float t = m_StateTime / 5.0f;
 
-		float t = m_StateTime / 10.0f;
+		//// サイン波を使ってピッチ角を計算
+		//// 発射後の上下方向の揺れ（傾き）を滑らかに変化させる
+		//float pitch = D3DX_PI / 4.0f * sinf(t * D3DX_PI);
 
-		float pitch = D3DX_PI / 4.0f * sinf(t * D3DX_PI);
+		//// 傾き回転用のクォータニオンを作成
+		//D3DXQUATERNION tilt;
 
-		D3DXQUATERNION tilt;
-		D3DXQuaternionRotationYawPitchRoll(
-			&tilt,
-			0.f,
-			0.f,
-			pitch);
+		//// Yaw、Rollは固定し、Pitch方向のみ回転させる
+		//D3DXQuaternionRotationYawPitchRoll(
+		//	&tilt,
+		//	0.f,       // Yaw（左右回転）
+		//	0.f,       // Pitch以外は固定
+		//	pitch);    // Pitch（上下方向の傾き）
 
-		// 常に固定のベースに対して合成
-		m_vQuaternion =  tilt* m_ShotBaseRot;
-		if (t >= 1.0f)
-		{
-			m_StateTime = 0.f;
-			m_MoveState = enMoveState::Live;
-		}
+		//// 発射時の基準回転に対して、今回の傾きを合成する
+		//// 常に元の発射姿勢を基準にして傾きを適用する
+		//m_vQuaternion = tilt * m_ShotBaseRot;
+
+		//// 傾きアニメーション終了判定
+		//if (t <= 0.f)
+		//{
+		//	// 次回のためにタイマーをリセット
+		//	m_StateTime = 5.f;
+
+		//	// 状態を通常移動状態へ変更
+		//	m_MoveState = enMoveState::Live;
+		//}
+		//if (m_pReaction->TimeOut() == false)
+		//{
+		//	m_MoveState = enMoveState::Live;
+		//}
 	}
 		break;
 	default:
@@ -150,16 +153,20 @@ void CPlayer::Update()
 	}
 	//ノックバック中
 
-	if (m_pReaction)
-	{
-		m_pReaction->SetPosition(&m_vPosition);
-		m_pReaction->Update();
-		if (m_pReaction->TimeOut())
+		if (m_pReaction)
 		{
-			m_pReaction.reset();
-			m_MoveState = enMoveState::Live;
+			m_pReaction->SetPosition(&m_vPosition);
+			m_pReaction->Update();
+			//if (m_MoveState != enMoveState::Live)
+			//{
+			//	if (m_pReaction->TimeOut())
+			//	{
+			//		m_pReaction.reset();
+			//		m_MoveState = enMoveState::Live;
+			//	}
+			//}
 		}
-	}
+	
 }
 //描画関数
 void CPlayer::Draw(
@@ -303,8 +310,7 @@ void CPlayer::OnCollision(CollisionBase* pCollider)
 			CReaction::ReactionParam param;
 			param.from = other->GetPosition();
 			param.to = GetPosition();
-			param.power = 0.5f;
-			param.time = 20.0f;
+
 
 			m_pReaction = CReactionFactory::Create(CReaction::KnockBack);
 			m_pReaction->Apply(param);

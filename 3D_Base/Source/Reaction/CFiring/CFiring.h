@@ -13,8 +13,10 @@ public:
     void Update()override;
     //モーションを設定
     virtual MoveType GetType() const override { return MoveType::Firing; };
+    //virtual D3DXQUATERNION GetRot() const override { return m_vQuaternion; };
 private:
     D3DXQUATERNION m_ShotBaseRot;
     D3DXQUATERNION m_vQuaternion;
+
 };
 

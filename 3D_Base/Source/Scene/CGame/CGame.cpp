@@ -117,9 +117,10 @@ void CGame::Update()
 {
 	CTime::GetInstance()->Update();
 	//ステージの移動制限
-
-	m_pPlayer->Update();
 	CReactionManager::GetInstance()->Update();
+	m_pPlayer->Update();
+
+
 //	m_pScores->Update();
 	CollisionManager::GetInstance()->Update();
 

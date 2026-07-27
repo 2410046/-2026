@@ -38,13 +38,17 @@ public:
     virtual void Apply(const ReactionParam& param) = 0;
      //更新関数
 	 virtual void Update() = 0;
-     //座標を取得
+     //座標を設定
     void SetPosition(D3DXVECTOR3* pos)
     {
         m_pPosition = pos;
     }
+    //座標を取得
+    D3DXVECTOR3 GetPosition() { return *m_pPosition; }
      //モーションを設定
-     virtual MoveType GetType() const = 0;
+    virtual MoveType GetType() const = 0;
+    //回転
+    //virtual D3DXQUATERNION GetRot() const = 0;
 
      bool IsActive() const
      {

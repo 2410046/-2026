@@ -16,10 +16,10 @@ void CKnockBack::Apply(
     dir /= len;
 
     m_State.active = true;
-    m_State.velocity = dir * param.power;
-    m_State.timer = param.time;
-}
+    m_State.velocity = dir * 0.5f;
+    m_State.timer = 20.0f;
 
+}
 void CKnockBack::Update()
 {
     if (m_State.active == false)
