@@ -40,13 +40,13 @@ void CFiring::Update()
 
 	// 発射時の基準回転に対して、今回の傾きを合成する
 	// 常に元の発射姿勢を基準にして傾きを適用する
-	m_vQuaternion = tilt * m_ShotBaseRot;
+	*m_pQuaternion = tilt * m_ShotBaseRot;
 
 	//終了
 	if (m_State.timer <= 0.0f)
 	{
 		//タイマーをリセット
-		m_State.timer = 0.f;
+		m_State.timer = 5.f;
 		m_State.active = false;
 	}
 }

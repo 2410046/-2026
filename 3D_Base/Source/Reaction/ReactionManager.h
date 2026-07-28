@@ -19,7 +19,7 @@ public:
     // 出現
     void Apply(CReaction::MoveType type);
     // 更新関数
-    void Update(/*D3DXVECTOR3 pos*/);
+    void Update();
 
     CReaction* GetReaction(CReaction::MoveType type);
 private:

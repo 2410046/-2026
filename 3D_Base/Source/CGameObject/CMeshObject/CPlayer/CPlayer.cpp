@@ -27,8 +27,6 @@ CPlayer::CPlayer()
 	//カプセルの当たり判定
 	m_pCollider = CreateCollider::CreateCaupsule(
 		radius, height, this, CollisionBase::Player);
-
-	OutputDebugStringA("Player Created\n");
 }
 //デストラクタ
 CPlayer::~CPlayer()
@@ -91,14 +89,14 @@ void CPlayer::Update()
 	case enMoveState::ShotIN://
 		//ここはまだできてない
 	{
-		//m_ShotBaseRot = m_vQuaternion;//クオータニオンを取得
 		CReaction::ReactionParam param;
 		param.rot = m_vQuaternion;
 		m_pReaction = CReactionFactory::Create(CReaction::Firing);
 		m_pReaction->Apply(param);
-		//クオータニオンをプレイヤーと同期しなければならない
+
 		if (m_pReaction->TimeOut() == false)
 		{
+			//m_pReaction.reset();
 			m_MoveState = enMoveState::Live;
 		}
 	}
@@ -108,44 +106,7 @@ void CPlayer::Update()
 		break;
 	case enMoveState::Shot:
 	{
-		// 状態経過時間を減少させる
-		//m_StateTime -= 0.1f;
 
-		//// 傾き計算用の時間係数を算出
-		//// 0～1の範囲で変化する値として使用する
-		//float t = m_StateTime / 5.0f;
-
-		//// サイン波を使ってピッチ角を計算
-		//// 発射後の上下方向の揺れ（傾き）を滑らかに変化させる
-		//float pitch = D3DX_PI / 4.0f * sinf(t * D3DX_PI);
-
-		//// 傾き回転用のクォータニオンを作成
-		//D3DXQUATERNION tilt;
-
-		//// Yaw、Rollは固定し、Pitch方向のみ回転させる
-		//D3DXQuaternionRotationYawPitchRoll(
-		//	&tilt,
-		//	0.f,       // Yaw（左右回転）
-		//	0.f,       // Pitch以外は固定
-		//	pitch);    // Pitch（上下方向の傾き）
-
-		//// 発射時の基準回転に対して、今回の傾きを合成する
-		//// 常に元の発射姿勢を基準にして傾きを適用する
-		//m_vQuaternion = tilt * m_ShotBaseRot;
-
-		//// 傾きアニメーション終了判定
-		//if (t <= 0.f)
-		//{
-		//	// 次回のためにタイマーをリセット
-		//	m_StateTime = 5.f;
-
-		//	// 状態を通常移動状態へ変更
-		//	m_MoveState = enMoveState::Live;
-		//}
-		//if (m_pReaction->TimeOut() == false)
-		//{
-		//	m_MoveState = enMoveState::Live;
-		//}
 	}
 		break;
 	default:
@@ -156,10 +117,11 @@ void CPlayer::Update()
 		if (m_pReaction)
 		{
 			m_pReaction->SetPosition(&m_vPosition);
+			m_pReaction->SetQuaternion(&m_vQuaternion);
 			m_pReaction->Update();
 			//if (m_MoveState != enMoveState::Live)
 			//{
-			//	if (m_pReaction->TimeOut())
+			//	if (m_pReaction->TimeOut()==false)
 			//	{
 			//		m_pReaction.reset();
 			//		m_MoveState = enMoveState::Live;
@@ -198,7 +160,7 @@ void CPlayer::Controller()
 		if (GetAsyncKeyState(VK_RIGHT) & 0x8000) moveX += 1.0f;
 		
 		if (GetAsyncKeyState('Z') & 0x8000) m_MoveState = enMoveState::Boost;
-		if (GetAsyncKeyState('X') & 0x8000) m_MoveState = enMoveState::ShotIN;
+		if (GetAsyncKeyState('X') & 0x0001) m_MoveState = enMoveState::ShotIN;
 		break;
 	case 1:
 		if (GetAsyncKeyState('W') & 0x8000) moveZ += 1.0f;
@@ -207,7 +169,7 @@ void CPlayer::Controller()
 		if (GetAsyncKeyState('D') & 0x8000) moveX += 1.0f;
 
 		if (GetAsyncKeyState('1') & 0x8000) m_MoveState = enMoveState::Boost;
-		if (GetAsyncKeyState('2') & 0x8000) m_MoveState = enMoveState::ShotIN;
+		if (GetAsyncKeyState('2') & 0x0001) m_MoveState = enMoveState::ShotIN;
 		break;
 	default:
 		break;
@@ -300,48 +262,43 @@ void CPlayer::OnCollision(CollisionBase* pCollider)
 	switch (pCollider->GetTag())
 	{
 		//プレイヤーと接触した場合
-	    case CollisionBase::Player:
-	    {
-			auto* other = dynamic_cast<CPlayer*>(pCollider->GetListener());
-			if (!other || other == this)
-				return;
+	case CollisionBase::Player:
+	{
+		auto* other = dynamic_cast<CPlayer*>(pCollider->GetListener());
+		if (!other || other == this)
+			return;
+		//ダウン状態は無視
+		if (m_MoveState == enMoveState::Down)
+		{
+			return;
+		}
 
+		//風船が多いほどスコアの量が上がる
+		//ブースト状態
+		//if (m_MoveState == enMoveState::Boost)
+		//{
+		//	//プレイヤーは風船を1つ取得する
+
+		//}
+		////相手がブースト状態の場合
+		//else if (other->GetBoost())
+		//{
+		//	//自身の風船を失いスコアが減少
+		//}
+		else
+		{
 			//ノックバック
 			CReaction::ReactionParam param;
 			param.from = other->GetPosition();
 			param.to = GetPosition();
-
-
 			m_pReaction = CReactionFactory::Create(CReaction::KnockBack);
 			m_pReaction->Apply(param);
+		}
+	}
 
-			//相手のプレイヤーも
-			//other->m_pKnockBack.Apply(
-			//	GetPosition(), other->GetPosition(), 0.5f, 20.0f);
-
-			//m_pReaction = CReactionApply::Create(CReaction::Boost);
-			//m_pReaction->Apply(m_vPosition, 0.5f, 10.f, m_vQuaternion);
-			
-			//auto* other = dynamic_cast<CPlayer*>(pCollider->GetListener());
-			//if (!other || other == this)
-			//return;
-			//
-			////ノックバック
-			//CReaction::ReactionParam param;
-			//param.from = other->GetPosition();
-			//param.to = GetPosition();
-			//param.power = 0.5f;
-			//param.time = 20.0f;
-			//
-			//m_pReaction = CReactionFactory::Create(CReaction::KnockBack);
-			//m_pReaction->Apply(param);
-			//
-			////相手のプレイヤーも
-			////other->m_pKnockBack.Apply(
-			////	GetPosition(), other->GetPosition(), 0.5f, 20.0f);
-	    }
 		break;
 	default:
 		break;
 	}
+	
 }

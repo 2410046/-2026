@@ -37,6 +37,8 @@ public:
 	int  GetID()const{ return m_ID; }
 	//プレイヤーIDの設定
 	void SetID(int id) { m_ID = id; }
+	//ブースト状態の取得
+	bool GetBoost() { return m_MoveState == enMoveState::Boost; }
 protected:
 	//当たり判定
 	void OnCollision(
@@ -46,28 +48,6 @@ protected:
 	//クオータニオン対応
 	void Quotanion(D3DXVECTOR3 moveDir);
 
-	// 攻撃方向を計算
-	void AttackDirection()
-	{
-		//D3DXMATRIX Quat;
-
-		////  回転行列
-		//D3DXMatrixRotationQuaternion(
-		//	&Quat,
-		//	&m_vQuaternion
-		//);
-		//// 基本方向ベクトルを回転
-		//m_Direction = BaseDirection;
-
-
-		//// 正規化
-		//D3DXVec3Normalize(&m_Direction, &m_Direction);
-		//// 当たり判定位置
-		//m_vPosition = m_Direction * AttackForward;
-		//// エフェクト表示位置
-		//m_EffectPos = m_PlayerPos
-		//	+ m_Direction * EffectForward + EffectHeight;
-	}
 protected:
 	enMoveState	m_MoveState;	//移動状態
 	int			m_ID;			//プレイヤーID

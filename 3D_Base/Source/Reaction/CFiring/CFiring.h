@@ -16,7 +16,7 @@ public:
     //virtual D3DXQUATERNION GetRot() const override { return m_vQuaternion; };
 private:
     D3DXQUATERNION m_ShotBaseRot;
-    D3DXQUATERNION m_vQuaternion;
+
 
 };
 

@@ -43,12 +43,13 @@ public:
     {
         m_pPosition = pos;
     }
-    //座標を取得
-    D3DXVECTOR3 GetPosition() { return *m_pPosition; }
+    //回転を設定
+    void SetQuaternion(D3DXQUATERNION* Quoternion)
+    {
+        m_pQuaternion = Quoternion;
+    }
      //モーションを設定
     virtual MoveType GetType() const = 0;
-    //回転
-    //virtual D3DXQUATERNION GetRot() const = 0;
 
      bool IsActive() const
      {
@@ -64,5 +65,5 @@ public:
 protected:
     ReactionState m_State = {};
     D3DXVECTOR3* m_pPosition = nullptr;//これを戻すとエラーが
-   // D3DXVECTOR3 m_vPosition = {};
+    D3DXQUATERNION* m_pQuaternion = nullptr;
 };
