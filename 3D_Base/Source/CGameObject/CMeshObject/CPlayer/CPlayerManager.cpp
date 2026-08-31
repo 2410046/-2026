@@ -29,6 +29,15 @@ void CPlayerManager::NewPlayer(int ID)
     player->SetScale(Player_Scale);
     //座標を設定
     player->SetPosition(Player_Pos[ID]);
+
+    //追尾用の座標クラス生成
+    auto tracking =
+        std::make_unique<CTracking>();
+    tracking->SetTarget(
+        player.get());
+    m_Tracking.push_back(
+        std::move(tracking));
+
     //プレイヤー登録
     m_Players.emplace_back(std::move(player));
 
@@ -72,4 +81,25 @@ CPlayer* CPlayerManager::GetPlayer(int index)
         return m_Players[index].get(); // 所有権は保持したままポインタを返す
     }
     return nullptr;
+}
+
+// Tracking取得
+CTracking*CPlayerManager::GetTracking(int index)
+{
+    if (index < 0 ||
+        index >= static_cast<int>(
+            m_Tracking.size()))
+    {
+        return nullptr;
+    }
+
+
+    return m_Tracking[index].get();
+}
+// Tracking一覧取得
+const std::vector<
+    std::unique_ptr<CTracking>>&
+    CPlayerManager::GetTrackings() const
+{
+    return m_Tracking;
 }

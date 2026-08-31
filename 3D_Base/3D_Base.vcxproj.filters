@@ -160,21 +160,6 @@
     <Filter Include="Source\GameObject\StaticMeshObject\Character\CPlayerManager\Player">
       <UniqueIdentifier>{040bd5ec-7ee6-45f0-ad0b-b09e571c4f23}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\GameObject\StaticMeshObject\Character\CBallun">
-      <UniqueIdentifier>{0c389e70-facc-4d2e-b5e0-dac537538e06}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\GameObject\StaticMeshObject\CShot">
-      <UniqueIdentifier>{b5086baf-e69c-4efc-a56d-370178f4bf22}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\GameObject\StaticMeshObject\CShot\CShotBase">
-      <UniqueIdentifier>{60ed34fd-469f-4480-9c23-bd310d682a8b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\GameObject\StaticMeshObject\CShot\CShotBase\CNomalShot">
-      <UniqueIdentifier>{16a041a7-820b-45b7-8df9-e7da89f70068}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\GameObject\StaticMeshObject\CShot\CShotListener">
-      <UniqueIdentifier>{79f8b816-61d2-4140-b541-131ce6d3c32b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\Reaction">
       <UniqueIdentifier>{7241ad3f-c316-45f3-a378-3e0e3cfe80e6}</UniqueIdentifier>
     </Filter>
@@ -195,6 +180,21 @@
     </Filter>
     <Filter Include="Source\Reaction\CFiring">
       <UniqueIdentifier>{f9a1cb24-d94b-4fb1-b254-53095f5a8e32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\GameObject\StaticMeshObject\Character\CTracking">
+      <UniqueIdentifier>{162b7a78-4b19-4c89-b9e7-eb8b17f0c142}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\GameObject\StaticMeshObject\Character\CTracking\CShot">
+      <UniqueIdentifier>{b5086baf-e69c-4efc-a56d-370178f4bf22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\GameObject\StaticMeshObject\Character\CTracking\CBallun">
+      <UniqueIdentifier>{0c389e70-facc-4d2e-b5e0-dac537538e06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\GameObject\StaticMeshObject\Character\CTracking\CShot\CShotManager">
+      <UniqueIdentifier>{2bd68718-e67d-4b9c-a6eb-2c5d5649bf9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\GameObject\StaticMeshObject\Character\CTracking\CBallun\CBallunManager">
+      <UniqueIdentifier>{5484e0f3-b273-40be-bdf6-6afd543397fe}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -348,9 +348,6 @@
     <ClCompile Include="Source\Reaction\KnockBack\CKnockBack.cpp">
       <Filter>Source\Reaction\CKnockBack</Filter>
     </ClCompile>
-    <ClCompile Include="Source\CGameObject\CMeshObject\CBallun\CBallun.cpp">
-      <Filter>Source\GameObject\StaticMeshObject\Character\CBallun</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Reaction\CBoost\CBoost.cpp">
       <Filter>Source\Reaction\CBoost</Filter>
     </ClCompile>
@@ -365,6 +362,21 @@
     </ClCompile>
     <ClCompile Include="Source\Reaction\CFiring\CFiring.cpp">
       <Filter>Source\Reaction\CFiring</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CGameObject\CMeshObject\CTracking\CBallun\CBallun.cpp">
+      <Filter>Source\GameObject\StaticMeshObject\Character\CTracking\CBallun</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CGameObject\CMeshObject\CTracking\CShot\CShot.cpp">
+      <Filter>Source\GameObject\StaticMeshObject\Character\CTracking\CShot</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CGameObject\CMeshObject\CTracking\CTracking.cpp">
+      <Filter>Source\GameObject\StaticMeshObject\Character\CTracking</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CGameObject\CMeshObject\CTracking\CShot\CShotManager\CShotManager.cpp">
+      <Filter>Source\GameObject\StaticMeshObject\Character\CTracking\CShot\CShotManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CGameObject\CMeshObject\CTracking\CBallun\CBallunManager\CBallunManager.cpp">
+      <Filter>Source\GameObject\StaticMeshObject\Character\CTracking\CBallun\CBallunManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -530,9 +542,6 @@
     <ClInclude Include="Source\CGameObject\CMeshObject\CCloud\CCloud.h">
       <Filter>Source\GameObject\StaticMeshObject\Character\CCloud</Filter>
     </ClInclude>
-    <ClInclude Include="Source\CGameObject\CMeshObject\CBallun\CBallun.h">
-      <Filter>Source\GameObject\StaticMeshObject\Character\CBallun</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Reaction\CReaction.h">
       <Filter>Source\Reaction</Filter>
     </ClInclude>
@@ -553,6 +562,21 @@
     </ClInclude>
     <ClInclude Include="Source\Reaction\CFiring\CFiring.h">
       <Filter>Source\Reaction\CFiring</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CGameObject\CMeshObject\CTracking\CBallun\CBallun.h">
+      <Filter>Source\GameObject\StaticMeshObject\Character\CTracking\CBallun</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CGameObject\CMeshObject\CTracking\CShot\CShot.h">
+      <Filter>Source\GameObject\StaticMeshObject\Character\CTracking\CShot</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CGameObject\CMeshObject\CTracking\CTracking.h">
+      <Filter>Source\GameObject\StaticMeshObject\Character\CTracking</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CGameObject\CMeshObject\CTracking\CShot\CShotManager\CShotManager.h">
+      <Filter>Source\GameObject\StaticMeshObject\Character\CTracking\CShot\CShotManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CGameObject\CMeshObject\CTracking\CBallun\CBallunManager\CBallunManager.h">
+      <Filter>Source\GameObject\StaticMeshObject\Character\CTracking\CBallun\CBallunManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

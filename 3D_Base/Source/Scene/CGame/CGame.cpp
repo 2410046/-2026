@@ -92,6 +92,11 @@ HRESULT CGame::LoadData()
 		}
 		//プレイヤーの生成
 		m_pPlayer->NewPlayer(p);
+
+		m_ShotManager.SetTracking(
+			m_pPlayer->GetTrackings());
+		m_BalloonManager.SetTracking(
+			m_pPlayer->GetTrackings());
 		//スコアの生成
 		//m_pScores->NewScore(p);
 	}

@@ -19,10 +19,8 @@ namespace
 CPlayer::CPlayer()
 	: m_MoveState		( enMoveState::App )
 	, m_StateTime		( 5.f )
-	, m_ID				( 0 )
 	, m_Life			( 3 )
 	, m_Scale			( 0 )
-	, m_ShotBaseRot		( 0.f,0.f,0.f,1.f)
 {	
 	//カプセルの当たり判定
 	m_pCollider = CreateCollider::CreateCaupsule(
@@ -86,7 +84,7 @@ void CPlayer::Update()
 		}
 	}
 		break;
-	case enMoveState::ShotIN://
+	case enMoveState::Shot://
 		//ここはまだできてない
 	{
 		CReaction::ReactionParam param;
@@ -99,14 +97,6 @@ void CPlayer::Update()
 			//m_pReaction.reset();
 			m_MoveState = enMoveState::Live;
 		}
-	}
-
-		//m_ShotBaseRot = m_vQuaternion;//クオータニオンを取得
-		//m_MoveState = enMoveState::Shot;//ショット状態に遷移
-		break;
-	case enMoveState::Shot:
-	{
-
 	}
 		break;
 	default:
@@ -169,7 +159,7 @@ void CPlayer::Controller()
 		if (GetAsyncKeyState('D') & 0x8000) moveX += 1.0f;
 
 		if (GetAsyncKeyState('1') & 0x8000) m_MoveState = enMoveState::Boost;
-		if (GetAsyncKeyState('2') & 0x0001) m_MoveState = enMoveState::ShotIN;
+		if (GetAsyncKeyState('2') & 0x0001) m_MoveState = enMoveState::Shot;
 		break;
 	default:
 		break;

@@ -2,6 +2,7 @@
 
 CCharacter::CCharacter()
 	: m_Speed	    ( 0.1f )
+	, m_ID          ( 0 )
 
 {
 	D3DXQuaternionIdentity(&m_Quat);

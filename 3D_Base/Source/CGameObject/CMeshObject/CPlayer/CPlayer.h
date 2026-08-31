@@ -1,8 +1,6 @@
 ﻿#pragma once
 #include "CMeshObject/CCharacter.h"
 #include "Global.h"
-
-//#include "Reaction/CBoost/CBoost.h"
 /********************************************************************************
 * プレイヤークラス
 **/
@@ -33,12 +31,8 @@ public:
 	virtual void Draw(
 		const CCamera* pCamera ) override;
 public:
-	//プレイヤーIDの取得
-	int  GetID()const{ return m_ID; }
-	//プレイヤーIDの設定
-	void SetID(int id) { m_ID = id; }
-	//ブースト状態の取得
-	bool GetBoost() { return m_MoveState == enMoveState::Boost; }
+	//ショット状態の取得
+	bool GetShot() { return m_MoveState == enMoveState::Shot; }
 protected:
 	//当たり判定
 	void OnCollision(
@@ -50,16 +44,11 @@ protected:
 
 protected:
 	enMoveState	m_MoveState;	//移動状態
-	int			m_ID;			//プレイヤーID
 	float       m_StateTime;	//状態の開始時間
-	//CKnockBack  m_pKnockBack;	//ノックバック
-	//CBoost      m_pBoost;	//ブースト
-	//CReaction  m_Reaction;
 	//キーボード
 	float       m_angle = 0.0f;
 	float       m_Scale;
 	int         m_Life;			//ライフの数
-	D3DXQUATERNION m_ShotBaseRot;
 
 	std::shared_ptr<CReaction>	m_pReaction;	//当たり判定
 };

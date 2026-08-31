@@ -2,7 +2,7 @@
 #include <vector>
 #include <memory>
 #include "CGameObject/CMeshObject/CPlayer/CPlayer.h"//プレイヤークラス
-
+#include "CGameObject/CMeshObject/CTracking/CTracking.h"//追尾クラス
 /********************************************************************************
 * プレイヤーマネージャークラス
 **/
@@ -24,6 +24,13 @@ public:
     std::vector<CPlayer*> GetPlayers()const;
     //プレイヤーの取得
     CPlayer* GetPlayer(int index);
+
+    // Tracking取得
+    CTracking* GetTracking(int index);
+        // Tracking一覧取得
+    const std::vector<
+        std::unique_ptr<CTracking>>&GetTrackings() const;
 private:
     std::vector<std::unique_ptr<CPlayer>> m_Players;     //プレイヤー
+    std::vector<std::unique_ptr<CTracking>> m_Tracking;  //追尾
 };
