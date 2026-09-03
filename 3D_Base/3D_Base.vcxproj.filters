@@ -196,6 +196,9 @@
     <Filter Include="Source\GameObject\StaticMeshObject\Character\CTracking\CBallun\CBallunManager">
       <UniqueIdentifier>{5484e0f3-b273-40be-bdf6-6afd543397fe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\GameObject\StaticMeshObject\Character\CTracking\CTrackingManager">
+      <UniqueIdentifier>{f1ea5456-ab3a-42ea-bf6e-ac46a24a615f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\stdafx.cpp">
@@ -377,6 +380,12 @@
     </ClCompile>
     <ClCompile Include="Source\CGameObject\CMeshObject\CTracking\CBallun\CBallunManager\CBallunManager.cpp">
       <Filter>Source\GameObject\StaticMeshObject\Character\CTracking\CBallun\CBallunManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CGameObject\CMeshObject\CCloud\CCloud.cpp">
+      <Filter>Source\GameObject\StaticMeshObject\Character\CCloud</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CGameObject\CMeshObject\CTracking\CTrackingManager\CTrackingManager.cpp">
+      <Filter>Source\GameObject\StaticMeshObject\Character\CTracking\CTrackingManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -577,6 +586,9 @@
     </ClInclude>
     <ClInclude Include="Source\CGameObject\CMeshObject\CTracking\CBallun\CBallunManager\CBallunManager.h">
       <Filter>Source\GameObject\StaticMeshObject\Character\CTracking\CBallun\CBallunManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CGameObject\CMeshObject\CTracking\CTrackingManager\CTrackingManager.h">
+      <Filter>Source\GameObject\StaticMeshObject\Character\CTracking\CTrackingManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

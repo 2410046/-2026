@@ -4,6 +4,7 @@
 //#include "CGameObject/CMeshObject/CTracking/CTracking.h"	    //追尾クラス
 #include "CGameObject/CMeshObject/CTracking/CShot/CShotManager/CShotManager.h"	    //ショットクラス
 #include "CGameObject/CMeshObject/CTracking/CBallun/CBallunManager/CBallunManager.h"//バルーンクラス
+#include "CGameObject/CMeshObject/CCloud/CCloud.h"                                  //雲クラス
 //#include "CGameObject/CUIObject/Score/CScoreManager.h"		//スコアマネージャークラス
 
 /********************************************************************************
@@ -31,23 +32,18 @@ public:
 private:
 	//スカイの動作関数
 	void Sky();		
-	//ボタンの動作関数
-	void Button();
 	//シーン遷移関数
 	void Next();
 private:
 	std::unique_ptr<CPlayerManager>			   m_pPlayer;	   //プレイヤークラス
+	std::unique_ptr<CCloud>			           m_pCloud;	   //雲クラス
 
-	std::unique_ptr<CStaticMeshObject>		m_pSky;		   //スカイクラス
+	std::unique_ptr<CStaticMeshObject>		   m_pSky;		   //スカイクラス
 
 	//std::unique_ptr<CScoreManager>			m_pScores;	   //スコアクラス
+	CShotManager m_ShotManager;					//ショット
 
-	std::vector<std::unique_ptr<CSelectUI>> m_pButton;	   //ボタンクラス
-
-
-	CShotManager m_ShotManager;
-
-	CBalloonManager m_BalloonManager;
+	CBalloonManager m_BalloonManager;//バルーン
 private:
 	float m_RotY;					   // SkyのY座標
 	int   m_PadButton[2] = { -1, -1 }; // コントローラーが押しているボタン(0:Pad0, 1:Pad1)

@@ -43,7 +43,6 @@ public:
 	const D3DXVECTOR3& GetRotation() const {
 		return m_vRotation;
 	}
-
 	//拡縮設定関数.
 	void SetScale( float x, float y, float z )
 	{
@@ -58,9 +57,10 @@ public:
 	const D3DXVECTOR3& GetScale() const {
 		return m_vScale;
 	}
-	//タグを取得する
-	int GetTag()const { return m_Tag; }
+
 	const D3DXMATRIX& GetWorldMatrix() const;
+
+	D3DXQUATERNION GetQuaternion() const { return m_vQuaternion; };
 protected://protectedは子クラスのみアクセス可能.
 	int m_Tag=0;
 protected:

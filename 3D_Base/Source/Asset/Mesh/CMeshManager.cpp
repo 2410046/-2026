@@ -64,9 +64,11 @@ HRESULT CMeshManager::CreateStatic()
 		{"Sky01", L"Sky\\Sky1.X"},
 		{"Sky02", L"Sky\\Sky2.X"},
 		{"Sky03", L"Sky\\Sky3.X"},
-		{ "Player01", L"Player\\Player01.X"},
-		{ "Player02", L"Player\\Player02.X"},
-		{ "Ballun",   L"Player\\Ballun.X"},
+		{ "Player01",L"Player\\Player01.X"},
+		{ "Player02",L"Player\\Player02.X"},
+		{ "Balloon" ,L"Asset\\Balloon.X"},
+		{ "Cloud"   ,L"Asset\\Cloud.X"},
+		{ "Shot"    ,L"Asset\\Shot.X"},
 	};
 	//データを登録
 	for (const auto& data : DataList)

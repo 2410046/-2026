@@ -2,7 +2,6 @@
 #include <vector>
 #include <memory>
 #include "CMeshObject/CTracking/CShot/CShot.h"
-#include "CMeshObject/CTracking/CTracking.h"
 
 //============================================================
 // ShotManager
@@ -14,7 +13,8 @@ public:
     CShotManager();
 
     ~CShotManager();
-
+    //生成
+    void NewShot(CTracking* pTracking);
     // 更新
     void Update(
         const std::vector<bool>& shotFlags);
@@ -22,11 +22,6 @@ public:
     void Draw(CCamera*pCamera);
     // 解放
     void Release();
-
-    // Trackingを設定
-    void SetTracking(
-        const std::vector<
-        std::unique_ptr<CTracking>>&trackings);
 private:
     // Shot生成
     void CreateShot(
@@ -37,6 +32,4 @@ private:
     // Shot
     std::vector<std::unique_ptr<CShot>>
         m_Shots;
-    // Trackingへの参照
-    std::vector<CTracking*>m_Tracking;
 };

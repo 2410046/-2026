@@ -150,7 +150,7 @@ void CPlayer::Controller()
 		if (GetAsyncKeyState(VK_RIGHT) & 0x8000) moveX += 1.0f;
 		
 		if (GetAsyncKeyState('Z') & 0x8000) m_MoveState = enMoveState::Boost;
-		if (GetAsyncKeyState('X') & 0x0001) m_MoveState = enMoveState::ShotIN;
+		if (GetAsyncKeyState('X') & 0x0001) m_MoveState = enMoveState::Shot;
 		break;
 	case 1:
 		if (GetAsyncKeyState('W') & 0x8000) moveZ += 1.0f;

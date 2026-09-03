@@ -13,8 +13,8 @@ public:
     enum LayerTag
     {
         Player = 0,    // プレイヤー
-        Shot,
-        Ground,    // 地面
+        Shot,          //ショット
+        Cloud,         // 雲
     };
 
     // コリジョン形状の種類

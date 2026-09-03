@@ -1,4 +1,5 @@
 #include "CShotManager.h"
+#include "CMeshObject/CTracking/CTrackingManager/CTrackingManager.h"
 //============================================================
 // Constructor
 //============================================================
@@ -17,38 +18,22 @@ CShotManager::~CShotManager()
     Release();
 }
 
-
-//============================================================
-// SetTracking
-//============================================================
-
-//void CShotManager::SetTracking(
-//    std::vector<std::unique_ptr<CTracking>>& tracking)
-//{
-//    m_pTracking = &tracking;
-//}
-void CShotManager::SetTracking(
-    const std::vector<
-    std::unique_ptr<CTracking>>&trackings)
+void CShotManager::NewShot(CTracking* pTracking)
 {
-    m_Tracking.clear();
-
-    m_Tracking.reserve(
-        trackings.size());
-
-
-    for (const auto& tracking : trackings)
+    // プレイヤーIDからTracking取得
+    if (pTracking == nullptr)
     {
-        if (!tracking)
-        {
-            m_Tracking.push_back(nullptr);
-            continue;
-        }
-
-
-        m_Tracking.push_back(
-            tracking.get());
+        return;
     }
+    // Shot生成
+    auto shot =
+        std::make_unique<CShot>();
+    // Trackingから初期位置・方向を取得
+    shot->Init(
+        pTracking);
+    // Shot登録
+    m_Shots.emplace_back(
+        std::move(shot));
 }
 
 //============================================================
@@ -58,66 +43,35 @@ void CShotManager::SetTracking(
 void CShotManager::Update(
     const std::vector<bool>& shotFlags)
 {
-
-    //========================================================
-    // PlayerごとのShotフラグを確認
-    //========================================================
-
-    for (int i = 0;
-        i < static_cast<int>(shotFlags.size());
-        ++i)
+    // ---------------------------------------------------------
+       // プレイヤーごとの発射処理
+       // ---------------------------------------------------------
+    // プレイヤーごとの発射処理
+    for (int playerID = 0;
+        playerID < static_cast<int>(shotFlags.size());
+        ++playerID)
     {
-        // Shotしない
-        if (!shotFlags[i])
+        // 発射していない
+        if (!shotFlags[playerID])
         {
             continue;
         }
 
-
-        // Trackingが存在しない
-        if (i >= static_cast<int>(
-            m_Tracking.size()))
-        {
-            continue;
-        }
-
-
-        CTracking* pTracking = m_Tracking[i];
-
+        // PlayerIDからTrackingを取得
+        CTracking* pTracking =
+            CTrackingManager::GetInstance()
+            ->GetTracking(playerID);
 
         if (pTracking == nullptr)
         {
             continue;
         }
 
-
-        //====================================================
-        // Trackingから座標・方向取得
-        //====================================================
-
-        D3DXVECTOR3 position =
-            pTracking->GetPosition();
-
-
-        D3DXVECTOR3 direction =
-            pTracking->GetDirection();
-
-
-        //====================================================
         // Shot生成
-        //====================================================
-
-        CreateShot(
-            position,
-            direction,
-            i);
+        NewShot(pTracking);
     }
 
-
-    //========================================================
-    // 既存Shot更新
-    //========================================================
-
+    // Shot更新
     for (auto& shot : m_Shots)
     {
         if (shot == nullptr)
@@ -125,23 +79,18 @@ void CShotManager::Update(
             continue;
         }
 
-
         shot->Update();
     }
 
-
-    //========================================================
-    // 死んだShot削除
-    //========================================================
-
+    // 死んだShotを削除
     m_Shots.erase(
         std::remove_if(
             m_Shots.begin(),
             m_Shots.end(),
             [](const std::unique_ptr<CShot>& shot)
             {
-                return shot == nullptr; //||
-                   // !shot->IsAlive();
+                return shot == nullptr ||
+                    !shot->GetFlag();
             }),
         m_Shots.end());
 }
@@ -195,6 +144,4 @@ void CShotManager::Draw(CCamera*pCamera)
 void CShotManager::Release()
 {
     m_Shots.clear();
-
-    m_Tracking.clear();
 }

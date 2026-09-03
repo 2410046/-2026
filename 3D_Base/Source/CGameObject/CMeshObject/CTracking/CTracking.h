@@ -20,11 +20,12 @@ public:
     D3DXVECTOR3 GetPosition() const;
 
     // Playerの方向
-    D3DXVECTOR3 GetDirection() const;
+    D3DXQUATERNION GetQuaternion() const;
 
     // 対象取得
     CPlayer* GetTarget() const;
-
+    //ID
+    int GetID() const;
 private:
 
     CPlayer* m_pTarget = nullptr;

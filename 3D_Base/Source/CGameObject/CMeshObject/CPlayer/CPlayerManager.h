@@ -25,12 +25,12 @@ public:
     //プレイヤーの取得
     CPlayer* GetPlayer(int index);
 
-    // Tracking取得
-    CTracking* GetTracking(int index);
-        // Tracking一覧取得
-    const std::vector<
-        std::unique_ptr<CTracking>>&GetTrackings() const;
+    // 全プレイヤーのShotフラグ取得
+    std::vector<bool> GetShotFlags() const;
+
+    // Shotフラグ取得
+    bool GetShotFlag(int ID) const;
 private:
     std::vector<std::unique_ptr<CPlayer>> m_Players;     //プレイヤー
-    std::vector<std::unique_ptr<CTracking>> m_Tracking;  //追尾
+    //std::vector<std::unique_ptr<CTracking>> m_Tracking;  //追尾
 };

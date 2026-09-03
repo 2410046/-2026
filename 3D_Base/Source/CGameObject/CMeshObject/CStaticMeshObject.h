@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "CGameObject.h"
 #include "Asset/Mesh/StaticMesh/CStaticMesh.h"
-#include "Asset/Mesh/CMeshManager.h"
+#include "Asset/AssetManager/AssetManager.h"
 #include "Asset/Effect/CEffect.h"
 #include "Collision/CollisionListener/CollisionListener.h"
 #include "Collision/CreateCollider/CreateCollider.h"

@@ -1,5 +1,7 @@
 ﻿#include "CGameObject/CMeshObject/CPlayer/CPlayerManager.h"
-#include "Asset/Mesh/CMeshManager.h"
+#include "Asset/AssetManager/AssetManager.h"
+#include "CMeshObject/CTracking/CTrackingManager/CTrackingManager.h"
+
 #include "MathUtility.h"
 #include <algorithm>
 namespace
@@ -22,7 +24,7 @@ void CPlayerManager::NewPlayer(int ID)
     //プレイヤーのオブジェクト生成
     auto player = std::make_unique<CPlayer>();
     //メッシュの接続
-    player->AttachMesh(*CMeshManager::GetStatic("Player01"));
+    player->AttachMesh(*AssetManager::GetStatic("Player01"));
     //プレイヤーIDの設定
     player->SetID(ID);
     //サイズを設定
@@ -30,17 +32,22 @@ void CPlayerManager::NewPlayer(int ID)
     //座標を設定
     player->SetPosition(Player_Pos[ID]);
 
-    //追尾用の座標クラス生成
-    auto tracking =
-        std::make_unique<CTracking>();
-    tracking->SetTarget(
-        player.get());
-    m_Tracking.push_back(
-        std::move(tracking));
-
     //プレイヤー登録
     m_Players.emplace_back(std::move(player));
+   
+    auto tracking =
+        std::make_unique<CTracking>();
 
+    // 今登録したプレイヤーを追跡
+    tracking->SetTarget(
+        m_Players.back().get());
+
+    // TrackingManagerへ登録
+    CTrackingManager::GetInstance()
+        ->AddTracking(
+            std::move(tracking));
+
+    
 }
 //動作関数
 void CPlayerManager::Update()
@@ -82,24 +89,46 @@ CPlayer* CPlayerManager::GetPlayer(int index)
     }
     return nullptr;
 }
-
-// Tracking取得
-CTracking*CPlayerManager::GetTracking(int index)
+/********************************************************************************
+* すべてのプレイヤーのShotフラグ取得
+********************************************************************************/
+std::vector<bool>
+CPlayerManager::GetShotFlags() const
 {
-    if (index < 0 ||
-        index >= static_cast<int>(
-            m_Tracking.size()))
+    std::vector<bool> result;
+
+    for (const auto& player : m_Players)
     {
-        return nullptr;
+        if (player == nullptr)
+        {
+            result.push_back(false);
+            continue;
+        }
+
+        result.push_back(
+            player->GetShot());
     }
 
-
-    return m_Tracking[index].get();
+    return result;
 }
-// Tracking一覧取得
-const std::vector<
-    std::unique_ptr<CTracking>>&
-    CPlayerManager::GetTrackings() const
+/********************************************************************************
+* Shotフラグ取得
+********************************************************************************/
+bool CPlayerManager::GetShotFlag(
+    int ID) const
 {
-    return m_Tracking;
+    if (ID < 0 ||
+        ID >= static_cast<int>(
+            m_Players.size()))
+    {
+        return false;
+    }
+
+    if (m_Players[ID] == nullptr)
+    {
+        return false;
+    }
+
+    return m_Players[ID]->GetShot();
 }
+

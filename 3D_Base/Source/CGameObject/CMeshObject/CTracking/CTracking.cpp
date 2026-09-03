@@ -28,17 +28,18 @@ D3DXVECTOR3 CTracking::GetPosition() const
 //============================================================
 // 方向取得
 //============================================================
-D3DXVECTOR3 CTracking::GetDirection() const
+D3DXQUATERNION CTracking::GetQuaternion() const
 {
     if (m_pTarget == nullptr)
     {
-        return D3DXVECTOR3(
+        return D3DXQUATERNION(
             0.0f,
             0.0f,
-            1.0f);
+            0.0f,
+            0.0f);
     }
 
-    return m_pTarget->GetRotation();
+    return m_pTarget->GetQuaternion();
 }
 
 //============================================================
@@ -47,4 +48,14 @@ D3DXVECTOR3 CTracking::GetDirection() const
 CPlayer* CTracking::GetTarget() const
 {
     return m_pTarget;
+}
+
+int CTracking::GetID() const
+{
+    if (m_pTarget == nullptr)
+    {
+        return -1;
+    }
+
+    return m_pTarget->GetID();
 }
